@@ -2,15 +2,7 @@ const express = require("express");
 const router = express.Router();
 const controller = require("../controllers/controllers");
 
-
-// router.get("/setup", controller.newList);
-
-router.get("/talks", controller.listConf);
-router.get('/talks/speaker/:term', controller.listOneSpeaker);
-router.get('/talks/session/:term', controller.listSession);
-router.get('/talks/time/:term', controller.listTime);
-router.get('/talks/:speaker/rating', controller.listRatingsBySpeaker);
-router.get('/talks/:id/ratingById', controller.listRatingsById);
+router.get("/talks", controller.listTalks);
 router.get('/talks/rate/:id/:rating', controller.rateTalkById)
 router.post('/posts', controller.handlePosts)
 

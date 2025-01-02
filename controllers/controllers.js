@@ -5,54 +5,17 @@ exports.newList = function (req, res) {
   conf.init();
   res.redirect("/");
 };
-exports.listConf = function (req, res) {
-  conf
-    .getAllEntries()
-    .then((list) => {
-      res.json(list);
-      console.log(list);
-    })
-    .catch((err) => {
-      console.log("promise rejected", err);
-    });
-};
 
-exports.listOneSpeaker = function (req, res) {
-  let speakerName = req.params["term"];
+exports.listTalks = function (req, res) {
+  const { session, speaker } = req.query;
   conf
-    .getSpeaker(speakerName)
+    .getTalk(session, speaker)
     .then((list) => {
       res.json(list);
-      console.log(list);
     })
     .catch((err) => {
-      console.log("promise rejected", err);
-    });
-};
-
-exports.listSession = function (req, res) {
-  let sessionName = req.params["term"];
-  conf
-    .getSession(sessionName)
-    .then((list) => {
-      res.json(list);
-      console.log(list);
-    })
-    .catch((err) => {
-      console.log("promise rejected", err);
-    });
-};
-
-exports.listTime = function (req, res) {
-  let talkTime = req.params["term"];
-  conf
-    .getTime(talkTime)
-    .then((list) => {
-      res.json(list);
-      console.log(list);
-    })
-    .catch((err) => {
-      console.log("promise rejected", err);
+      console.error("Error fetching talks:", err);
+      res.status(500).json({ error: "Failed to fetch talks" });
     });
 };
 

@@ -1,1 +1,1 @@
-# conferencePlanning
+# Glasgow Coursework

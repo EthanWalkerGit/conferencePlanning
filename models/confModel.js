@@ -11,7 +11,6 @@ class Conf {
     }
   }
   init() {
-
     this.conf.insert({
       "id": "1",
       "speaker": "Martin Fowler", 
@@ -163,69 +162,27 @@ class Conf {
     });
   }
 
+  getTalk(sessionName, speakerName) {
+    return new Promise((resolve, reject) => {
+      const query = {};
+  
+      if (sessionName && sessionName !== "all") {
+        query.session = sessionName;
+      }
+      if (speakerName) {
+        query.speaker = speakerName; 
+      }
 
-  getAllEntries() {
-    return new Promise((resolve, reject) => {
-      this.conf.find({}, function (err, entries) {
+      this.conf.find(query, function (err, entries) {
         if (err) {
           reject(err);
         } else {
           resolve(entries);
-          console.log("function all() returns: ", entries);
+          console.log("function getTalk returns: ", entries);
         }
       });
     });
   }
-  getSpeaker(speakerName) {
-    console.log(speakerName)
-    return new Promise((resolve, reject) => {
-      this.conf.find({speaker:speakerName}, function (err, entries) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(entries);
-          console.log("function getSpeaker returns: ", entries);
-        }
-      });
-    });
-  }
-  getSession(sessionName) {
-    return new Promise((resolve, reject) => {
-      this.conf.find({session:sessionName}, function (err, entries) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(entries);
-          console.log("function getSession returns: ", entries);
-        }
-      });
-    });
-  }
-  getTime(talkTime) {
-    return new Promise((resolve, reject) => {
-      this.conf.find({time:talkTime}, function (err, entries) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(entries);
-          console.log("function getTime returns: ", entries);
-        }
-      });
-    });
-  }
-
-  getTalkById(id) {
-    return new Promise((resolve, reject) => {
-      this.conf.find({id:id} , function (err, entries) {
-        if (err) {
-          reject(err);
-        } else {
-          resolve(entries);
-          console.log("function getTalkById returns: ", entries);
-        }
-      });
-    });
-   }
 
   rateTalkById(id,newRating){
     let rating=Number(newRating)
@@ -239,7 +196,6 @@ class Conf {
       });
     });
   }
-
   rateTalk(talkId,newRating){
     let id=String(talkId)
     let rating=Number(newRating)
